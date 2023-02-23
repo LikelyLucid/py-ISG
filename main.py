@@ -12,8 +12,8 @@ from shutil import rmtree
 # Videos with higher resolution will be almost the same by size (sometimes even bigger) but they will process faster as
 # there are fewer frames to process
 RESIZE_TIMES = 4
-WIDTH = 1280 if not RESIZE_TIMES else int(1280 / RESIZE_TIMES)
-HEIGHT = 720 if not RESIZE_TIMES else int(720 / RESIZE_TIMES)
+WIDTH = 1280 // RESIZE_TIMES if RESIZE_TIMES else 1280
+HEIGHT = 720 // RESIZE_TIMES if RESIZE_TIMES else 720
 BYTES_PER_IMAGE = int(WIDTH * HEIGHT / 8)
 FPS = 30
 
@@ -25,8 +25,7 @@ def create_temp_dir():
 
 
 def get_sorted_filenames_list(dir_path):
-    files_sorted_list = natsorted(os.listdir(os.path.normpath(dir_path)))
-    return files_sorted_list
+    return natsorted(os.listdir(os.path.normpath(dir_path)))
 
 
 def create_images_from_video(video_path, save_path, mode="iio"):
